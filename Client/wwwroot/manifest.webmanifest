@@ -1,0 +1,21 @@
+{
+  "name": "TestSharedFolder.Client",
+  "short_name": "TestSharedFolder.Client",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#03173d",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "_content/TestSharedFolder.Shared/icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "_content/TestSharedFolder.Shared/icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

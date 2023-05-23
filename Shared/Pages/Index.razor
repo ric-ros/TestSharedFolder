@@ -1,0 +1,43 @@
+﻿@page "/"
+@using global::Shared;
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Index</PageTitle>
+
+<h1>Oh Yeah!</h1>
+
+<button class="btn btn-primary" @onclick="ShowAlert">Show Alert using file nested in index.razor</button>
+<button class="btn btn-primary" @onclick="Prompt">Show Alert using ExampleJsInterop class</button>
+
+<p>@_message</p>
+
+@code {
+    private string? _message;
+    private IJSObjectReference? _module;
+    private ExampleJsInterop? _jsInterop;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _jsInterop = new ExampleJsInterop(JSRuntime)
+                        ?? throw new InvalidOperationException("ExampleJsInterop has not been initialized.");
+
+        _module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/TestSharedFolder.Shared/Pages/Index.razor.js")
+                        ?? throw new InvalidOperationException("ExampleJsInterop has not been initialized.");
+    }
+
+    async Task<string> ShowAlert()
+    {
+        var result = await _module!.InvokeAsync<string>("showPrompt", "Hello from index.razor.js file");
+        _message = $"Received from index.razor.js: {result}";
+        return result;
+
+    }
+
+    async Task<string> Prompt()
+    {
+        var result = await _jsInterop!.Prompt("Hello from ExampleJsInterop class");
+
+        _message = $"Received from ExampleJsInterop class: {result}";
+        return result;
+    }
+}
