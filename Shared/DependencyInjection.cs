@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MudBlazor.Services;
 using Shared;
 using TestSharedFolder.Shared.Services;
 
@@ -10,6 +11,8 @@ namespace TestSharedFolder.Shared
         {
             services.AddScoped<WeatherForecastService>();
             services.AddScoped<ExampleJsInterop>();
+
+            services.AddMudServices();
         }
     }
 }
