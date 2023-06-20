@@ -9,8 +9,23 @@
 @code {
     private int currentCount = 0;
 
+    [CascadingParameter]
+    public ErrorLog? Error { get; set; }
+
     private void IncrementCount()
     {
-        currentCount++;
+        try
+        {
+            currentCount++;
+
+            if (currentCount > 5)
+            {
+                throw new InvalidOperationException("Current count is over five!");
+            }
+        }
+        catch (Exception ex)
+        {
+            Error?.ProcessError(ex);
+        }
     }
 }
